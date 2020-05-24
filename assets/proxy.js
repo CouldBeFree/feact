@@ -1,39 +1,28 @@
-/*const target = {
-	someProp: 1
+let user = {
+  name: 'John'
+};
+
+function wrap(target) {
+  return new Proxy(target, {
+    get(target, prop, val){
+      if(prop in target){
+        return Reflect.get(...arguments);
+      } else {
+        throw new Error(`Object has no property ${prop}`);
+      }
+    }
+  })
 }
 
-const handler = {
-	get: function (target, key) {
-		return key in target ? target[key] : 'Doesnt exists'
-	}
-}
-const proxy = new Proxy(target, handler);
-console.log(proxy.someProp);*/
+let numbers = [1,2,3];
 
-/*const input = document.querySelector('#username');
+numbers = new Proxy(numbers, {
+    get(target, prop) {
+      if(prop < 0){
+        prop = +prop + target.length;
+      }
+      return Reflect.get(...arguments);
+    }
+});
 
-const inputState = {
-	id: 'username',
-	value: ''
-}
-
-const handler = {
-	set: function (target, key, value) {
-		if(target.id === 'username') {
-			target[key] = value;
-			document.querySelector(`#${target.id}`).value = value;
-			return true;
-		}
-		return false;
-	}
-}
-
-const proxy = new Proxy(inputState, handler);
-proxy.value = 'John Doe';
-
-input.addEventListener('input', (e) => {
-	proxy.value = e.target.value;
-	console.info('result', proxy.value, input.value);
-})
-
-console.info('result', proxy.value, input.value);*/
+console.log(numbers[-2]);

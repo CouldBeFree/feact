@@ -1,2 +1,2 @@
 import './assets/proxy'
-import './assets/render'
+// import './assets/render'
